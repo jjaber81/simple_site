@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body style="background-color:black;">
+
+        <div class="container">
+            <div class="jumbotron">
+                <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <a class="navbar-brand" href="{% url 'index' %}">Naya auto</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                      <ul class="navbar-nav">
+                        {% if user.is_authenticated %}
+                          <li class="nav-item">
+                          <a class="nav-link" href="{% url 'user_logout' %}">Logout</a></li>
+                        {% else %}
+                          <li class="nav-item">
+                          <a class="nav-link" href="{% url 'my_app:user_login' %}">Login</a></li>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'my_app:customers' %}">Customers</a></li>
+                        {% else %}
+                          <a class="nav-link" href="{% url 'my_app:need_login' %}">Customers</a></li>
+                        {% endif %}
+                        <li class="nav-item">
+                          <a class="nav-link" href="{% url 'my_app:sign_up' %}">Sign Up</a>
+                        </li>
+                      </ul>
+                    </div>
+                  </nav>
+            </div>
+        </div>
+        {% block body_block %}
+  
+        {% endblock %}
+    </body>
+</html>

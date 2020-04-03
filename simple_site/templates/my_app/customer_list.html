@@ -1,0 +1,34 @@
+{% extends "my_app/base.html" %}
+
+{% block body_block %}
+
+    {% if customer_list %}
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Credit Card Number</th>
+
+                </tr>
+            </thead>
+                <tbody>
+                    {% for acc in customer_list %}
+                    <tr>
+                        <td>{{ acc.first_name }}</td>
+                        <td>{{ acc.last_name }}</td>
+                        <td>{{ acc.email }}</td>
+                        <td>{{ acc.address }}</td>
+                        <td>{{ acc.cc_number }}</td>
+                            
+                    </tr>
+                    {% endfor %}
+                </tbody>
+        </table>
+    {% else %}
+        <p> No Users Found</p>
+    {% endif %}
+
+{% endblock %}
