@@ -2,39 +2,40 @@ from django.contrib.auth.models import User
 from django.test import TestCase
 from django.utils import timezone
 
-from .models import Post
-from .forms import PostForm
+from my_app.models import Customer
+from my_app.forms import UserForm
+
+
 
 class PostTestCase(TestCase):
     def setUp(self):
         self.user1 = User.objects.create_user(username="admin")
-        Post.objects.create(author=self.user1,
-                            title="Test",
-                            text="We are testing this",
-                            created_date=timezone.now(),
-                            published_date=timezone.now())
+        Customer.objects.create(first_name=self.user1,
+                            last_name="Admin",
+                            email="we@wearetesting.com",
+                            address='1720 E Belmont, Anaheim',
+                            cc_number='345566788888')
 
-    def test_post_is_posted(self):
-        """Posts are created"""
-        post1 = Post.objects.get(title="Test")
-        self.assertEqual(post1.text, "We are testing this")
+    def test_customer_is_posted(self):
+        """Customer is created"""
+        cust1 = Customer.objects.get(last_name="Admin")
+        self.assertEqual(cust1.email, "we@wearetesting.com")
 
-    def test_valid_form_data(self):
-        form = PostForm({
-            'title': "Just testing",
-            'text': "Repeated tests make the app foul-proof",
-        })
-        self.assertTrue(form.is_valid())
-        post1 = form.save(commit=False)
-        post1.author = self.user1
-        post1.save()
-        self.assertEqual(post1.title, "Just testing")
-        self.assertEqual(post1.text, "Repeated tests make the app foul-proof")
+    # def test_valid_form_data(self):
+    #     form = UserForm({
+    #         'email': "Just testing",
+    #     })
+    #     self.assertTrue(form.is_valid())
+    #     custo1 = form.save(commit=False)
+    #     Customer.first_name = self.user1
+    #     custo1.save()
+    #     self.assertEqual(custo1.last_name, "Admin")
+    #     self.assertEqual(custo1.text, "Repeated tests make the app foul-proof")
 
-    def test_blank_form_data(self):
-        form = PostForm({})
-        self.assertFalse(form.is_valid())
-        self.assertEqual(form.errors, {
-            'title': ['This field is required.'],
-            'text': ['This field is required.'],
-        })
+    # def test_blank_form_data(self):
+    #     form = UserForm({})
+    #     self.assertFalse(form.is_valid())
+    #     self.assertEqual(form.errors, {
+    #         'email': ['This field is required.'],
+    #         'username': ['This field is required.']
+    #     })
